@@ -130,8 +130,6 @@ fn start_game(max_view_space: u8, username: &String, level: GameLevels) {
             }
         };
 
-        println!("Your guessed: {}", guess);
-
         match guess.cmp(&secret_number) {
             Ordering::Less => println!("Too small! The correct answer is {}", &secret_number),
             Ordering::Greater => println!("Too big! The correct answer is {}", &secret_number),
@@ -148,13 +146,14 @@ struct PromptTheGameModeResult {
     game_mode: GameLevels,
 }
 fn prompt_the_game_mode() -> PromptTheGameModeResult {
-    println!("Select an game mode:");
+    println!("================================================================");
+    println!("Select a game mode or just press enter to play the Easy mode\n");
     let mut modes = Vec::new();
     GameLevels::iter().for_each(|mode| modes.push(mode));
     modes.iter().for_each(|mode| {
         if *mode == GameLevels::EASY {
             println!(
-                "{}",
+                "1 - {}",
                 format!(
                     "😊 {}: it's the better mode to try your lucky. (Default mode)",
                     mode
@@ -163,7 +162,7 @@ fn prompt_the_game_mode() -> PromptTheGameModeResult {
             println!("\t💬 You'll receive a tip of the response\n");
         } else if *mode == GameLevels::MEDIUM {
             println!(
-                "{}",
+                "2 - {}",
                 format!(
                     "🫣  {}: Woo! You have very much lucky or you are trying your lucky with me?!",
                     mode
@@ -171,10 +170,11 @@ fn prompt_the_game_mode() -> PromptTheGameModeResult {
             );
             println!("\t💬 You'll receive a tip of the response\n");
         } else {
-            println!("{}", format!("💀 {}: Oh my god! What's you?!", mode));
+            println!("3 - {}", format!("💀 {}: Oh my god! What's you?!", mode));
             println!("\t❌ You don't will receive a tip of the response.\n");
         }
     });
+    println!("================================================================");
 
     let mut user_input = String::new();
 
@@ -244,13 +244,13 @@ fn define_game_mode(level: GameLevels) -> DefineGameModeResult {
     let mut max_view_space: u8 = 0;
 
     if is_easy_mode {
-        max_view_space = 3
-    }
-    if is_medium_mode {
         max_view_space = 5
     }
+    if is_medium_mode {
+        max_view_space = 9
+    }
     if is_hard_mode {
-        max_view_space = 10
+        max_view_space = 16
     }
     return DefineGameModeResult {
         view_space: max_view_space,
