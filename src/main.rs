@@ -123,7 +123,7 @@ fn start_game(max_view_space: u8, username: &String, level: GameLevels) {
             Ok(num) => num,
             Err(_) => {
                 println!(
-                    "{} also don't is part of the game... but justtry again!\n",
+                    "{} also don't is part of the game... but just try again!\n",
                     { guess.replace("\n", "") }
                 );
                 continue;
@@ -135,7 +135,15 @@ fn start_game(max_view_space: u8, username: &String, level: GameLevels) {
             Ordering::Greater => println!("Too big! The correct answer is {}", &secret_number),
             Ordering::Equal => {
                 let username_formatted = username.replace('\n', "");
-                println!("🎊 Wow You win {username_formatted}, congratulations!");
+                println!("\n\n");
+                println!("🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉");
+                println!("🎉 Woww! You won {username_formatted}, congratulations 🥳!");
+                println!("🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉🎉");
+                println!("\n\n");
+
+                println!(
+                    "You want to play again? If yes just call me again! Well, see you later 👋"
+                );
                 break;
             }
         }
@@ -244,10 +252,10 @@ fn define_game_mode(level: GameLevels) -> DefineGameModeResult {
     let mut max_view_space: u8 = 0;
 
     if is_easy_mode {
-        max_view_space = 5
+        max_view_space = 4
     }
     if is_medium_mode {
-        max_view_space = 9
+        max_view_space = 7
     }
     if is_hard_mode {
         max_view_space = 16
