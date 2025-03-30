@@ -59,6 +59,15 @@ fn main() {
 
     let game_definitions = define_game_mode(prompt.game_mode);
 
+    println!("\n============================");
+    println!("\nRight! Let's start the game!");
+    println!("\n============================");
+
+    println!(
+        "\nYou have selected the {:?} mode!\n",
+        game_definitions.level
+    );
+
     start_game(
         game_definitions.view_space,
         &data.name,
@@ -103,17 +112,20 @@ fn start_game(max_view_space: u8, username: &String, level: GameLevels) {
             get_secret_number_tip(max_view_space);
         }
 
-        print!("Please input your guest:");
+        println!("Please guess a number:");
         let mut guess = String::new();
 
-        io::stdin().read_line(&mut guess).expect(
-            "I don't was able to read what you did you have wroten... Is better to play again.",
-        );
+        io::stdin()
+            .read_line(&mut guess)
+            .expect(&unable_to_read_read_line_message());
 
         let guess: u32 = match guess.trim().parse() {
             Ok(num) => num,
             Err(_) => {
-                println!("Please input a valid number");
+                println!(
+                    "{} also don't is part of the game... but justtry again!\n",
+                    { guess.replace("\n", "") }
+                );
                 continue;
             }
         };
@@ -121,8 +133,8 @@ fn start_game(max_view_space: u8, username: &String, level: GameLevels) {
         println!("Your guessed: {}", guess);
 
         match guess.cmp(&secret_number) {
-            Ordering::Less => println!("Too small! The correct anwer is {}", &secret_number),
-            Ordering::Greater => println!("Too big! The correct anwer is {}", &secret_number),
+            Ordering::Less => println!("Too small! The correct answer is {}", &secret_number),
+            Ordering::Greater => println!("Too big! The correct answer is {}", &secret_number),
             Ordering::Equal => {
                 let username_formatted = username.replace('\n', "");
                 println!("🎊 Wow You win {username_formatted}, congratulations!");
@@ -225,8 +237,6 @@ struct DefineGameModeResult {
     level: GameLevels,
 }
 fn define_game_mode(level: GameLevels) -> DefineGameModeResult {
-    let _ = level;
-
     let is_easy_mode = level == GameLevels::EASY;
     let is_medium_mode = level == GameLevels::MEDIUM;
     let is_hard_mode = level == GameLevels::HARD;
@@ -249,8 +259,11 @@ fn define_game_mode(level: GameLevels) -> DefineGameModeResult {
 }
 
 fn get_secret_number_tip(max_view_space: u8) {
+    println!("=====================================================");
     println!(
-        "Tip 🫣: the answer maybe an number between 1 and {}",
+        ">> Tip 🫣: the answer maybe an number between 1 and {}",
         &max_view_space
-    )
+    );
+    println!("=====================================================");
+    println!("\n");
 }
